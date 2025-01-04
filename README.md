@@ -3,6 +3,7 @@ Implementation code for the paper: “Density-Refine: Patent Image Retrieval by 
 # Dataset
 DeepPatent: https://github.com/GoFigure-LANL/DeepPatent-dataset/blob/main/README.md
 # Framework
-![框架圖片](Figure/image.png)
+![image](https://github.com/user-attachments/assets/efb76aad-5bab-48ba-8231-da35cebb668c)
+
 # Result
-![result圖片](result/image.png)
+
