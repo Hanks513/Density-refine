@@ -6,5 +6,6 @@ DeepPatent: https://github.com/GoFigure-LANL/DeepPatent-dataset/blob/main/README
 ![image](https://github.com/user-attachments/assets/efb76aad-5bab-48ba-8231-da35cebb668c)
 
 # Result
-![image](https://github.com/user-attachments/assets/dd56a68f-1f47-4cf4-a8aa-f6daeef120e8)
+![image](https://github.com/user-attachments/assets/f7166ab1-63d2-4619-a089-1ff4d944c21b)
+
 
