@@ -41,45 +41,36 @@ def New_data_maker(line, save_rootpath, txt_filepath, db_eps, queue):
     labels = dbscan.fit_predict(nonzero_points)
     unique_labels = np.unique(labels[labels != -1])
 
-    # 繪製旋轉後的分群結果
+
     nonzero_points_xy = np.column_stack((nonzero_points[:, 1], nonzero_points[:, 0]))
     coordinates = nonzero_points_xy[:, :2]
 
     BBox = []
     for cluster_label in unique_labels:
-        # 提取属于当前簇的点坐标
+
         cluster_points = coordinates[labels == cluster_label]
         
         if len(cluster_points) > 30000:
-            # 计算 bounding box
             min_x, min_y = np.min(cluster_points, axis=0)
             max_x, max_y = np.max(cluster_points, axis=0)
-
-            # 绘制 bounding box
             rectangle = plt.Rectangle((min_x, min_y), max_x - min_x, max_y - min_y,
                                     edgecolor='red', linewidth=2, fill=False)
             xy = [rectangle.get_x(),rectangle.get_y()]
             width = rectangle.get_width()
             height = rectangle.get_height()
-
-            # 計算Rectangle的四個角點
             left = (xy[0])
             upper = (xy[1])
             right = (xy[0] + width)
             lower = (xy[1] + height)
-
-            # 建立Rectangle對應的多邊形點集
             polygon = [left, upper, right, lower]
             BBox.append(polygon)
     img = Image.open(rootpath+img_path)
 
     for j in range(len(BBox)):
-        # 進行裁剪
         cropped_image = img.crop(BBox[j])
 
-        # 將 filename 中的 ".png" 替換為 "_j.png"
         new_filename = filename.replace(".png", f"_{j}.png")
-        # 新的檔案路徑
+
         new_filepath = os.path.join("plus", directory, new_filename)
 
         if not os.path.exists(os.path.join(save_rootpath, "plus", directory)):
@@ -91,11 +82,11 @@ def New_data_maker(line, save_rootpath, txt_filepath, db_eps, queue):
         # with open(txt_filepath, 'a') as file:
         #     file.write(text_to_insert)
         queue.put(text_to_insert)
-    img.close()  # 关闭原始图像文件
+    img.close()  
 
 if __name__ == '__main__':
     
-    start_time = time.time()  # 記錄開始時間
+    start_time = time.time()  
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--save_rootpath', help='Img save rootpath')
@@ -106,31 +97,30 @@ if __name__ == '__main__':
     args = parser.parse_args()
     print(f"Patent {int(args.start)}:{int(args.end)} rebuild Start")
 
-    # 使用 multiprocessing.Manager 创建一个经理对象
     manager = multiprocessing.Manager()
-    # 创建共享的队列
+
     queue = manager.Queue()
 
-    # 启动写入文件的进程
+
     writer_process = multiprocessing.Process(target=write_to_file, args=(queue, args.txt_filepath))
     writer_process.start()
 
     with open('./patlist/train_patent_trn.txt') as f:
         lines = f.read().splitlines()
-    # 將每一行轉換為 tuple 並存放在列表中
-    data_list = [list(line.split()) for line in lines]
-    partial_func = partial(New_data_maker, save_rootpath=args.save_rootpath, txt_filepath=args.txt_filepath, db_eps = int(args.db_eps), queue = queue)  # 这里替换为你的其他参数值
 
-    # 使用 multiprocessing.Pool 執行多進程處理
+    data_list = [list(line.split()) for line in lines]
+    partial_func = partial(New_data_maker, save_rootpath=args.save_rootpath, txt_filepath=args.txt_filepath, db_eps = int(args.db_eps), queue = queue)  
+
+
     with multiprocessing.Pool(processes=16) as pool:
         pool.map(partial_func, data_list[int(args.start):int(args.end)])
     
     queue.put(None)
     # writer_process.join()
     pool.close()
-    # pool.join()  # 等待所有进程结束
+    # pool.join()  
 
-    end_time = time.time()  # 記錄結束時間
+    end_time = time.time()  
     elapsed_time = end_time - start_time
     print("Elapsed Time: {:.2f} seconds".format(elapsed_time))
     print("Rebuild End")
