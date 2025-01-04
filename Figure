@@ -1,4 +1,2 @@
-git add -u  # 這將標記檔案為已刪除
-git commit -m "刪除檔案 image.png"
-git push
+
 
