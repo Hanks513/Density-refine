@@ -3,6 +3,7 @@ Implementation code for the paper: “Density-Refine: Patent Image Retrieval by 
 # Dataset
 DeepPatent: https://github.com/GoFigure-LANL/DeepPatent-dataset/blob/main/README.md <br>
 CADSketchNet: https://bharadwaj-manda.github.io/CADSketchNet/ ##Dataset_B <br>
+# Getting Started
 # Framework
 ![image](https://github.com/user-attachments/assets/efb76aad-5bab-48ba-8231-da35cebb668c)
 
