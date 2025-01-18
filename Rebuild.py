@@ -9,7 +9,7 @@ import multiprocessing
 import argparse
 from functools import partial
 
-rootpath = "./patent_data/"
+rootpath = "./patent_data/"  # Please replace this with the root directory path for your dataset.
 
 def write_to_file(queue, file_path):
     with open(file_path, 'a') as file:
