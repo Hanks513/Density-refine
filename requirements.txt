@@ -1,0 +1,9 @@
+Python==3.12.3
+torch==2.6.0a0+df5bbc09d1.nv24.11
+torchvision==0.20.0a0
+timm
+pytorch-metric-learning
+wandb
+numpy==1.26.4
+pillow==11.0.0
+opencv==4.10.0
